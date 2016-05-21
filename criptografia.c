@@ -50,8 +50,8 @@ long long unsigned int randomKeyPublic (long long unsigned int FI){
 	long long unsigned int keyPublic;
 
 	do {
-		keyPublic = (rand() % 20);
-	} while (MDC(FI, KPUBLICMIN + rand() % FI) != 1);
+		keyPublic = (long long unsigned int) (rand() % 20);
+	} while (MDC(FI, keyPublic) != 1);
 
 	return keyPublic;
 }
@@ -72,11 +72,33 @@ void encryptRSA(char *text, char *textEncrypted, long long unsigned int e, long 
 		aux = k;
 		aux += 48;
 		textEncrypted[i] = (char) aux;
+		printf("%llu\n",(long long unsigned int)textEncrypted[i]);
 	}
 	textEncrypted[i] = '\0';
 }
 
 
+
+long long unsigned int privateKey(long long unsigned int e, long long unsigned int FI){
+		long long unsigned int aux,rest,dividend;
+	/* parte tradicional do algoritmo de Euclides */
+	rest = FI;
+	while (rest != 1) {
+		aux = rest;
+		dividend = (long long unsigned) e/rest;
+		rest = (long long unsigned) e%rest;
+		if (rest != 1) e = aux;
+	} 
+
+	printf("%llu %llu %llu %llu\n",FI,dividend,e,rest);
+
+	return((long long unsigned int)(1 + (FI * dividend))/e);
+}
+void decryptRSA(char *textEncrypted, char *textDecrypted, long long unsigned e, long long unsigned FI){
+
+	/* parte estendida do algoritmo de Euclides */
+
+}
 int main (int argc, char **argv){
 	long long unsigned int primeP, primeQ, nKeyPublic, ekeyPublic, functionFI;
 	char text[30];
@@ -103,6 +125,5 @@ int main (int argc, char **argv){
 
 	encryptRSA(text,textEncrypted,ekeyPublic,nKeyPublic);
 
-	printf("%llu \n",(long long unsigned int)textEncrypted);
 	return 0;
 }
