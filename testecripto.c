@@ -11,7 +11,7 @@ void encryptRSA(char *text, long long unsigned int *intEncrypted, long long unsi
 	for (i=0; text[i] != '\0'; i++){
 		
 		aux[i] = (long long unsigned int) text[i];
-		aux[i] -= 65;
+		aux[i] -= 48;
 		//printf("%llu\n",(long long unsigned int)aux);	
 		printf("código letra:%llu\n",(long long unsigned int)aux[i]);
 		
@@ -64,7 +64,7 @@ void decryptRSA(long long unsigned int privateKey, long long unsigned int *intEn
 		}
 		aux[i] = k;
 		// /aux += 65;
-		textDecrypted[i] = (char) aux[i] + 65;
+		textDecrypted[i] = (char) aux[i] + 48;
 		printf("dec: código decodificado letra: %llu\n",(long long unsigned int)aux[i]);
 	}
 	textDecrypted[i] = '\0';
@@ -73,6 +73,7 @@ void decryptRSA(long long unsigned int privateKey, long long unsigned int *intEn
 
 void printaString (char *string){
 	int i;
+	printf("\n");
 	for (i=0;string[i]!='\0';i++)
 		printf("%c",string[i]);
 
@@ -83,7 +84,7 @@ int main(int argc, char **argv){
 	e = 13;
 	FI =640;
 	n = 697;
-	char text[20]={'T','U','R','I','N','G','\0'};
+	char text[20]={'L','I','G','I','A',' ','R','I','S','S','A','R','D','I','\0'};
 	char decr[20];
 	long long unsigned int *cifra;
 	unsigned int size = strlen(text);
